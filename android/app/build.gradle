@@ -1,12 +1,11 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 project.ext.envConfigFiles = [
-    qa:".env.qa",
     prod:".env.prod",
     dev:".env.dev",
 ]
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
 
@@ -107,13 +106,6 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.shivamnayak.flavor_app"
             applicationIdSuffix ".prod"
-        }
-        qa {
-            minSdkVersion rootProject.ext.minSdkVersion
-            applicationId 'com.shivamnayak.flavor_app.qa'
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.shivamnayak.flavor_app"
-            applicationIdSuffix ".qa"
         }
     }
     namespace 'com.shivamnayak.flavor_app'
