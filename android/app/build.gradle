@@ -1,6 +1,12 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+project.ext.envConfigFiles = [
+    qa:".env.qa",
+    prod:".env.prod",
+    dev:".env.dev",
+]
 
 def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
 
@@ -86,6 +92,30 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId 'com.shivamnayak.flavor_app.dev'
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.shivamnayak.flavor_app"
+            applicationIdSuffix ".dev"
+        }
+        prod {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId 'com.shivamnayak.flavor_app.prod'
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.shivamnayak.flavor_app"
+            applicationIdSuffix ".prod"
+        }
+        qa {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId 'com.shivamnayak.flavor_app.qa'
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.shivamnayak.flavor_app"
+            applicationIdSuffix ".qa"
+        }
+    }
     namespace 'com.shivamnayak.flavor_app'
     defaultConfig {
         applicationId 'com.shivamnayak.flavor_app'
